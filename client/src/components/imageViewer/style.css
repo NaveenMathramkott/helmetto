@@ -1,0 +1,16 @@
+.image-viewer-btn {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+#image-viewer-modal {
+  width: 100%;
+  height: 100%;
+}
+
+.imageViewer-hover-div:hover {
+  background-color: var(--border);
+  opacity: 0.4;
+}

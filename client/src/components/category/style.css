@@ -1,0 +1,21 @@
+.categoryCard-mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.categoryCard-mainWrapper > img:hover {
+  border: 1px solid var(--primary);
+}
+.categoryCard-mainWrapper > img {
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+  object-fit: contain;
+  box-shadow: 2px 2px 14px var(--border);
+  margin-bottom: 10px;
+}
+.categoryCard-mainWrapper > span {
+  font-weight: 500;
+  font-size: 14px;
+}

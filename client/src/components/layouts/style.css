@@ -1,0 +1,237 @@
+.navbar-main {
+  min-width: "100vw";
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 0 40px 0 40px;
+  border-bottom: 1px solid #ededed;
+}
+.navbar-secondary {
+  background-color: #f5f5f5;
+  padding: 0 50px 0 50px;
+  font-weight: 300;
+  display: flex;
+  justify-content: space-between;
+}
+
+.divider {
+  height: 20px;
+  border: 1px solid #d9d9d9;
+}
+.left-nav {
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+  text-decoration: none;
+}
+.left-nav > span {
+  font-weight: 900;
+  font-size: 30px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+}
+sup {
+  font-size: 12px;
+  background-color: var(--gold);
+}
+.right-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 2.5;
+}
+
+.search-box {
+  background-color: #f3f9fb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 400px;
+  min-height: 40px;
+  padding: 6px 10px 6px 10px;
+  border-radius: 8px;
+}
+.search-box > div > input {
+  border: none;
+  border-style: none;
+  padding-left: 10px;
+  font-weight: 400;
+  background-color: #f3f9fb;
+}
+
+.search-box > div > input:focus {
+  outline: none;
+}
+.search-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.autoComplete {
+  width: 100%;
+  border: none;
+}
+
+.linkBtn {
+  font-weight: 700;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  color: var(--light);
+}
+.linkBtn:hover {
+  font-weight: 700;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--hover);
+  background-color: #f6f6fc;
+  border-radius: 10px;
+}
+.linkBtn > span {
+  padding-left: 6px;
+  background-color: var(--background);
+}
+
+.navbar-secondary > span {
+  font-size: 12px;
+  flex: 2;
+}
+.right-sec-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+.status-view-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.status-view-bar > span {
+  padding-left: 6px;
+  font-size: 0.7rem;
+}
+
+.profile-options {
+  position: relative;
+}
+
+#profile-option-list {
+  border: none;
+  min-width: 90px;
+  min-height: 30px;
+  background: transparent;
+  font-weight: 700;
+  color: #666666;
+}
+#profile-option-list:hover {
+  border-radius: 10px;
+  font-weight: 700;
+  color: var(--hover);
+  cursor: pointer;
+}
+
+.onMobile-view {
+  display: none;
+}
+.mobileView-header {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .navbar-main {
+    padding: 0 10px 0 10px;
+  }
+  .navbar-secondary {
+    width: 100vw;
+  }
+  .navbar-secondary > span {
+    display: none;
+  }
+  .right-nav {
+    display: none;
+  }
+
+  .right-sec-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    min-width: 100%;
+  }
+  .onMobile-view {
+    display: flex;
+  }
+  .left-nav > span {
+    display: none;
+  }
+
+  .onMobileView {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .onMobile-view > .mobileView-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80vw;
+  }
+  .search-box-mobileView {
+    background-color: #f3f9fb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 200px;
+    min-height: 40px;
+    padding: 6px 8px 6px 8px;
+    border-radius: 8px;
+    flex: 6;
+  }
+  .drawer-mobileView {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .search-box-mobileView > div > input {
+    border: none;
+    border-style: none;
+    padding-left: 10px;
+    font-weight: 400;
+    background-color: #f3f9fb;
+  }
+  .search-box-mobileView > div > input:focus {
+    outline: none;
+  }
+  .onMobileView > button {
+    font-weight: 700;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    color: var(--hover);
+    border-radius: 6px;
+  }
+  .onMobileView > button:hover {
+    font-weight: 700;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    color: var(--hover);
+    background-color: #f6f6fc;
+    border-radius: 10px;
+  }
+  .onMobileView > button > span {
+    padding-left: 6px;
+  }
+}

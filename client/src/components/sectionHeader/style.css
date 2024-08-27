@@ -1,0 +1,17 @@
+.sectionHeader-mainWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  margin: 20px 10px 20px 10px;
+}
+.sectionHeader-mainWrapper > button {
+  border: none;
+  background-color: transparent;
+}
+.sectionHeader-mainWrapper > button:hover {
+  color: var(--primary);
+}
+.sectionHeader-mainWrapper > span {
+  border-bottom: 3px solid var(--primary);
+}

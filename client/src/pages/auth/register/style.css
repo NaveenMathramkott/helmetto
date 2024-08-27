@@ -1,0 +1,101 @@
+.login-mainWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+.login-mainWrapper > form {
+  border: 10px solid var(--border);
+  padding: 20px;
+  border-radius: 4px;
+  min-width: 300px;
+}
+
+form > h3 {
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 10px 0;
+}
+.input-group > label {
+  font-size: 14px;
+  font-weight: 300;
+  padding: 4px 10px;
+}
+.icon-btn {
+  border-radius: 10px;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 10px;
+}
+.icon-btn > input,
+textarea,
+select {
+  background-color: var(--primary);
+  border: none;
+  padding: 10px;
+  text-decoration: color(var(--white));
+  color: var(--white);
+}
+.icon-btn > div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon-btn > input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+form > .btn-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 10px 0;
+}
+
+.btn-group > button {
+  border-radius: 10px;
+  border: none;
+  padding: 4px;
+  margin: 6px;
+  width: 140px;
+  height: auto;
+}
+.btn-group-product {
+  display: flex;
+  justify-content: center;
+}
+.btn-group-product > button {
+  border-radius: 10px;
+  border: none;
+  padding: 4px;
+  margin: 6px;
+  height: auto;
+  width: 50%;
+}
+
+#btn-login {
+  background-color: var(--black);
+  font-weight: 500;
+  color: var(--white);
+  font-size: 20px;
+}
+
+#register-button {
+  font-size: 12px;
+  font-weight: 300;
+}
+#register-button > button {
+  border: none;
+  background-color: transparent;
+  color: var(--hover);
+  cursor: pointer;
+}

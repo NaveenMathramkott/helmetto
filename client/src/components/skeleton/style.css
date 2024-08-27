@@ -1,0 +1,65 @@
+.skeletonWrapper {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 30px;
+}
+.skeletonProductWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 30px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.categorySkeleton-wrapper {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+
+  box-shadow: 2px 2px 14px var(--border);
+}
+.ProductSkeleton-wrapper {
+  width: 210px;
+  height: 160px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 14px var(--border);
+}
+.titleCateSkeletonWrapper {
+  width: 120px;
+  height: 20px;
+  box-shadow: 2px 2px 14px var(--border);
+  margin-top: 10px;
+}
+.cateSkeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skeletonAnimation {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+.borderAnimation {
+  animation: border-loading 1s linear infinite alternate;
+  border-radius: 20px;
+}
+
+@keyframes border-loading {
+  0% {
+    border: 1px solid hsl(200, 20%, 80%);
+  }
+  100% {
+    border: 1px solid hsl(200, 20%, 95%);
+  }
+}
