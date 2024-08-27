@@ -1,19 +1,18 @@
-# Electro Mart (MERN E-commerce)
-Is a MERN stack E-commerce web app specifically designed for mechanicals and electronicals e store.
+# Helmetto with 3D configuration (MERN E-commerce)
 
+Is a MERN stack E-commerce web app specifically designed for helmets and accessories e store.
 
 ## Features
 
-### Authenticaton JWT, admin dashboard, user dashboard, profile view, categories & products search, add view update remove (products and categories), admin controls, private routing,
+### Authenticaton JWT, 3D configurator, admin dashboard, user dashboard, profile view, categories & products search, add view update remove (products and categories), admin controls, private routing,
 
 ## Tech Stacks
 
-**Client :** React JS, CSS3
+**Client :** React JS, CSS3, Three JS
 
 **Server :** Node JS, Express JS
 
 **Database:->** MongoDB
-
 
 ## Run Locally
 
@@ -23,11 +22,10 @@ Clone the project
 https://github.com/NaveenMathramkott/MERN_Ecommecre.git
 ```
 
-
-
 #### Add the following to the .env file
 
 server :
+
 ```bash
 PORT = -------
 DEV_MODE =development
@@ -36,10 +34,13 @@ JWT_SECRET_KEY = ---------
 ```
 
 client :
+
 ```bash
 REACT_APP_BASE_URL = API_url
 ```
+
 #### Go to the project directory
+
 ```bash
   cd MERN_Ecommecre
 ```
@@ -70,6 +71,4 @@ Start the Client
   npm start
 ```
 
-
-
-## Start the app 
+## Start the app
