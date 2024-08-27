@@ -47,6 +47,7 @@
   background-color: var(--green);
   width: 90%;
   cursor: pointer;
+  color: var(--white);
 }
 .product-detail-right > .button-buy-cart > button:hover {
   box-shadow: 1px 1px 6px var(--primary);
@@ -58,6 +59,23 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
+}
+.product-detail-right > .button-configurator > button {
+  padding: 8px;
+  border-radius: 8px;
+  border: 0.5px solid var(--light);
+  background-color: var(--primary);
+  width: 100%;
+  cursor: pointer;
+  color: var(--white);
+}
+.product-detail-right > .button-configurator > button:hover {
+  box-shadow: 1px 1px 6px var(--primary);
+}
+
+.product-detail-right > .button-configurator {
+  display: flex;
+  width: 100%;
 }
 #price-mrp-detail {
   font-weight: 100;

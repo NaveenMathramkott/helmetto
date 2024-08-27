@@ -5,7 +5,7 @@ import { useCart } from "../../context/cartProvider";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ data, onClick }) => {
-  const [cart, setCart] = useCart();
+  const { cart, setCart } = useCart();
 
   const balance = (data?.offer * data?.price) / 100;
 
@@ -29,10 +29,10 @@ const ProductCard = ({ data, onClick }) => {
           <span id="name">{textShorter(data?.name)}</span>
 
           <span id="price">
-            <span id="price-mrp">AED {getOffer(data?.price, data?.offer)}</span>{" "}
-            AED {data?.price}
+            <span id="price-mrp">₹ {getOffer(data?.price, data?.offer)}</span> ₹{" "}
+            {data?.price}
           </span>
-          {data?.offer && <span id="offer">Save - AED {balance}</span>}
+          {data?.offer && <span id="offer">Save - ₹ {balance}</span>}
         </div>
       </div>
       <button id="add-to-cart-product-button" onClick={() => onAddToCart(data)}>

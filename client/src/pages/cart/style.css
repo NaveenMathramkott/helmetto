@@ -7,25 +7,8 @@
 .cart-container-left {
   flex: 2;
 }
-.cart-container-right {
-  flex: 1;
-  min-height: 600px;
-}
-
-.cart-section-header > h3 {
-  padding-bottom: 30px;
-}
 
 /* ----------------------------------------- */
-
-.cart-section-header {
-  height: fit-content;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  width: 99%;
-}
 
 .cart-table-scroll {
   overflow-y: auto;
@@ -84,27 +67,6 @@
 option {
   background-color: var(--hover);
 }
-#addressUpdate {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#addressUpdate > span {
-  padding: 6px;
-  width: 80%;
-  background-color: var(--border);
-  min-height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#addressUpdate-btn {
-  border: none;
-  padding: 4px;
-  width: 70%;
-  border-radius: 4px;
-}
 
 #countinue-shop-button {
   border: none;
@@ -113,50 +75,42 @@ option {
   color: var(--primary);
   cursor: pointer;
 }
-.cart-section-body {
-  padding: 10px;
-}
-.cart-section-body > .cart-section-body-summary {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  font-size: large;
-  width: 100%;
-}
-.cart-section-body > .cart-section-body-summary > span:nth-child(2) {
-  font-weight: 700;
-}
-.cart-section-body > button {
-  font-weight: 700;
-  padding: 6px;
-  width: 100%;
-  border: none;
-  border-radius: 4px;
-  color: var(--lioght);
-  background-color: var(--primary);
-}
+
 .cart-wrapper-onMobile {
   display: none;
 }
 
-#payment-screen-wrapper {
+.payment-continue-web {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
+}
+.payment-continue-mobile {
+  display: none;
 }
 
-#payment-btn {
+.payment-button {
+  background-color: var(--gold);
   border: none;
-  padding: 8px;
-  margin: 10px;
-  width: auto;
-  background-color: var(--primary);
-  border-radius: 8px;
-  width: 100%;
+  padding: 6px;
+  border-radius: 10px;
+  min-width: 350px;
+  font-size: 1rem;
 }
 
 @media screen and (max-width: 900px) {
+  .payment-continue-web {
+    display: none;
+  }
+  .payment-continue-mobile {
+    top: 20px;
+    z-index: 100rem;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+  }
   .cart-mainWrapper {
     display: flex;
     flex-direction: column;

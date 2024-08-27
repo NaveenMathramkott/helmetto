@@ -8,7 +8,8 @@
 }
 
 :root {
-  --primary: #008ecc;
+  --primary: #0a1828;
+  --blue: #05abf3;
   --white: #ffff;
   --black: black;
   --text: #666666;
@@ -21,9 +22,11 @@
   --line: #d9d9d9;
   --hover: #80bcbd;
   --green: #249b3e;
-  --font-fam: "Poppins", sans-serif;
   --test: rgb(236, 236, 236);
-  --gold: #ffd900;
+  --gold: #ffcc00;
+  --deep-red: #b4121b;
+
+  --font-fam: "Poppins", sans-serif;
 }
 
 /* font-family: 'Montserrat', sans-serif; */

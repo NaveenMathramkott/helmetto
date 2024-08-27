@@ -26,6 +26,8 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("result", name, password, email, isAdmin, answer, address);
+
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/auth/register`,
@@ -39,13 +41,13 @@ const Register = () => {
         }
       );
       if (res && res.data.success) {
-        toast.success(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
+        toast.success(res.data.message);
       } else {
         toast.error(res.data.message);
       }

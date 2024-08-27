@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authProvider";
 import toast from "react-hot-toast";
-import webIcon from "../../assets/emartIcon.png";
+import webIcon from "../../assets/brand-name.png";
+import mobIcon from "../../assets/logo.png";
 import { IoIosPersonAdd } from "react-icons/io";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
@@ -19,7 +20,7 @@ import { debounce } from "../../utils/utils";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useCart();
+  const { cart } = useCart();
   const [showOpen, setShowOpen] = useState(false);
   const [productList, setProductList] = useState([]);
   const [auth, setAuth] = useAuth();
@@ -77,7 +78,7 @@ const Header = () => {
   return (
     <>
       <nav className="navbar-secondary">
-        <span>Welcome to World Wide E Mart</span>
+        <span>Welcome to Helmetto E-store</span>
         <div className="right-sec-navbar">
           <div className="status-view-bar">
             <CiLocationOn color="#80bcbd" /> <span>Deliver to 680516</span>
@@ -96,9 +97,22 @@ const Header = () => {
       </nav>
       <nav className="navbar-main">
         <Link className="left-nav" to={"/"}>
-          <img src={webIcon} alt="webIcon" width={50} height={50} />
+          <img
+            src={webIcon}
+            alt="webIcon"
+            width={120}
+            height={50}
+            id="largeIcon"
+          />
+          <img
+            src={mobIcon}
+            alt="mobileIcon"
+            width={50}
+            height={30}
+            id="smallIcon"
+          />
           <span>
-            Electro Mart<sup>Beta</sup>
+            <sup>Beta</sup>
           </span>
         </Link>
         <div className="right-nav">

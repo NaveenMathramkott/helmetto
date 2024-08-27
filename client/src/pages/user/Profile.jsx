@@ -33,8 +33,9 @@ const Profile = ({ redirect }) => {
           user: auth?.user,
         }
       );
+      toast.success(res.data.message, { duration: 4000 });
+
       if (res && res.data.success) {
-        toast.success(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -44,12 +45,11 @@ const Profile = ({ redirect }) => {
       } else {
         toast.error(res.data.message);
       }
-      navigate(`${redirect}` || "/");
+      if (redirect) navigate(redirect);
     } catch (error) {
       toast.error(`error in update user`);
     }
   };
-
   return (
     <div className="user-profile-mainWrapper">
       <form onSubmit={handleSubmit}>

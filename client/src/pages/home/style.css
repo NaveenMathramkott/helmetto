@@ -6,11 +6,18 @@
   margin-bottom: 40px;
 }
 
-.cat-header {
+.radio-group {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   padding: 10px;
+  gap: 4px;
+}
+.radio-section {
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  padding: 1px 3px;
 }
 
 .carousel-style {
@@ -20,13 +27,13 @@
   color: #fff;
   line-height: 160px;
   text-align: center;
-  background: rgb(0, 142, 204);
+  /* background: rgb(0, 142, 204);
   background: linear-gradient(
     180deg,
     rgba(0, 142, 204, 1) 0%,
     rgba(0, 212, 255, 1) 0%,
     rgba(0, 142, 192, 0.10976890756302526) 87%
-  );
+  ); */
   object-fit: fill;
 }
 
@@ -51,4 +58,10 @@
   flex-wrap: wrap;
   gap: 20px;
   padding: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .radio-group {
+    padding: 4px;
+  }
 }

@@ -1,0 +1,39 @@
+.appLoading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--white);
+}
+@keyframes moveLine {
+  0% {
+    stroke-dashoffset: 4500;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 4500;
+  }
+}
+.animate-moveLine {
+  animation: moveLine 6s linear infinite;
+  stroke: var(--primary);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

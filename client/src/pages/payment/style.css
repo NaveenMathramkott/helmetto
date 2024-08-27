@@ -1,0 +1,86 @@
+.cart-container-right {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cart-section-header > h3 {
+  padding: 10px 0;
+  margin: 10px 0;
+}
+
+.cart-section-header {
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  width: auto;
+}
+
+.cart-section-body {
+  padding: 10px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+.cart-section-body > .cart-section-body-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: large;
+  width: 100%;
+}
+.cart-section-body > .cart-section-body-summary > span:nth-child(2) {
+  font-weight: 700;
+}
+.cart-section-body > button {
+  font-weight: 700;
+  padding: 6px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  color: var(--lioght);
+  background-color: var(--primary);
+}
+
+#addressUpdate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#addressUpdate > span {
+  padding: 6px;
+  width: 80%;
+  background-color: var(--border);
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#addressUpdate-btn {
+  border: none;
+  padding: 4px;
+  width: 70%;
+  border-radius: 4px;
+}
+
+#payment-screen-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#payment-btn {
+  border: none;
+  padding: 8px;
+  margin: 10px;
+  width: auto;
+  background-color: var(--gold);
+  border-radius: 8px;
+  width: 50%;
+  color: var(--white);
+}

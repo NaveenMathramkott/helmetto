@@ -5,6 +5,7 @@ import { Radio } from "antd";
 import { PRICE_DATA } from "../../constant/constant";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import NoData from "../../components/noData/NoData";
 
 const ProductCatList = () => {
   const location = useLocation();
@@ -42,8 +43,9 @@ const ProductCatList = () => {
   };
 
   const toProductDetailPage = (item) => {
-    navigate("/product", { state: item });
+    navigate(`/product/${item.slug}`, { state: item });
   };
+
   return (
     <Layout title={`${location?.state?.name}-CategoryList-Emart`}>
       <div className="productCat-mainWrapper">
@@ -73,16 +75,20 @@ const ProductCatList = () => {
           <div className="productCat-body-header">
             <h3>{`${location?.state?.name} Category List`}</h3>
           </div>
-          <div className="productCat-data-list">
-            {products?.map((item) => (
-              <div key={item?._id}>
-                <ProductCard
-                  data={item}
-                  onClick={() => toProductDetailPage(item)}
-                />
-              </div>
-            ))}
-          </div>
+          {products.length !== 0 ? (
+            <div className="productCat-data-list">
+              {products?.map((item) => (
+                <div key={item?._id}>
+                  <ProductCard
+                    data={item}
+                    onClick={() => toProductDetailPage(item)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <NoData />
+          )}
         </div>
       </div>
     </Layout>

@@ -7,8 +7,9 @@ import { Carousel, Radio } from "antd";
 import ProductCard from "../../components/productCard/ProductCard";
 import SectionHeader from "../../components/sectionHeader/SectionHeader";
 import CategoryCard from "../../components/category/CategoryCard";
-import { PRICE_DATA } from "../../constant/constant";
+import { CAROUSEL_DATA, PRICE_DATA } from "../../constant/constant";
 import toast from "react-hot-toast";
+import NoData from "../../components/noData/NoData";
 import {
   CategorySkeleton,
   ProductSkeleton,
@@ -20,7 +21,8 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [checked] = useState([]);
   const [radio, setRadio] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [productLoading, setProductLoading] = useState(false);
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
   useEffect(() => {
     getAllCategory();
@@ -36,33 +38,37 @@ const HomePage = () => {
 
   const getAllProducts = async () => {
     try {
-      setLoading(true);
+      setProductLoading(true);
       const { data } = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/v1/product/get-product`
       );
-      setLoading(false);
       setProducts(data.products);
+      setProductLoading(false);
     } catch (error) {
-      setLoading(false);
+      setProductLoading(false);
       console.log(error);
     }
   };
 
   const getAllCategory = async () => {
     try {
+      setCategoryLoading(true);
       const { data } = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/v1/category/get-category`
       );
       if (data?.success) {
         setCategories(data?.category);
+        setCategoryLoading(false);
       }
     } catch (error) {
+      setCategoryLoading(false);
       console.log(error);
     }
   };
 
   const filterProduct = async () => {
     try {
+      setCategoryLoading(true);
       const { data } = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/product/product-filters`,
         {
@@ -71,32 +77,27 @@ const HomePage = () => {
         }
       );
       setProducts(data?.products);
+      setCategoryLoading(false);
     } catch (error) {
+      setCategoryLoading(false);
       console.log(error);
     }
   };
 
   return (
-    <Layout title={`all-products-Emart`}>
+    <Layout title={`All products Helmetto helmets`}>
       <div className="mainContaner">
         {/* category header start*/}
-        <div className="cat-header">
+        <div>
           <Radio.Group
             size="middle"
             onChange={(e) => setRadio(e.target.value)}
             buttonStyle="solid"
-            style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+            style={{ display: "flex", flexWrap: "wrap" }}
+            className="radio-group"
           >
             {PRICE_DATA?.map((item) => (
-              <Radio
-                key={item.id}
-                value={item.range}
-                style={{
-                  borderRadius: "8px",
-                  border: "1px solid #008ecc",
-                  padding: "2px 4px",
-                }}
-              >
+              <Radio key={item.id} value={item.range} className="radio-section">
                 {item.name}
               </Radio>
             ))}
@@ -106,34 +107,15 @@ const HomePage = () => {
         {/* carousel start */}
         <div>
           <Carousel autoplay>
-            <div>
-              <img
-                className="carousel-style"
-                alt="home-screen-product"
-                src="https://i.pinimg.com/564x/d6/e8/69/d6e8690bcc922224ace9cf1a2410c8a3.jpg"
-              />
-            </div>
-            <div>
-              <img
-                className="carousel-style"
-                alt="home-screen-product"
-                src="https://i.pinimg.com/564x/9d/7b/1f/9d7b1f682cfddeb77d0a9f18f04973b4.jpg"
-              />
-            </div>
-            <div>
-              <img
-                className="carousel-style"
-                alt="home-screen-product"
-                src="https://i.pinimg.com/564x/60/fc/d5/60fcd5c646686fc4550ab4097449cfb1.jpg"
-              />
-            </div>
-            <div>
-              <img
-                className="carousel-style"
-                alt="home-screen-product"
-                src="https://i.pinimg.com/564x/ea/b3/1b/eab31b6f8f09f900447ce0ce1c169d47.jpg"
-              />
-            </div>
+            {CAROUSEL_DATA.map((item) => (
+              <div>
+                <img
+                  className="carousel-style"
+                  alt="home-screen-product"
+                  src={item.source}
+                />
+              </div>
+            ))}
           </Carousel>
         </div>
         {/* carousel end */}
@@ -144,22 +126,26 @@ const HomePage = () => {
               heading={`Shop from top Categories`}
               onClick={() => toast.success("Please select the below category")}
             />
-            <div className="category-header">
-              {categories?.map((item) => (
-                <CategoryCard
-                  key={item._id}
-                  name={item.name}
-                  image={item.photo}
-                  onClick={() =>
-                    navigate("/productCatList", { state: item, navigate })
-                  }
-                />
-              ))}
-            </div>
+            {!categoryLoading ? (
+              <div className="category-header">
+                {categories?.map((item) => (
+                  <CategoryCard
+                    key={item._id}
+                    name={item.name}
+                    image={item.photo}
+                    onClick={() =>
+                      navigate("/productCatList", { state: item, navigate })
+                    }
+                  />
+                ))}
+              </div>
+            ) : (
+              <CategorySkeleton />
+            )}
           </div>
         ) : (
           <div style={{ padding: "20px" }}>
-            <CategorySkeleton />
+            <NoData />
           </div>
         )}
         {/* shop category ends */}
@@ -167,23 +153,27 @@ const HomePage = () => {
         {products.length > 0 ? (
           <div className="spacer-mainWrapper">
             <SectionHeader
-              heading={`Grab the best deals on spares`}
+              heading={`Grab the best deals on Helmets`}
               onClick={() => toast.success("You can see all the product below")}
             />
-            <div className="deals-header">
-              {products?.map((item) => (
-                <div key={item._id}>
-                  <ProductCard
-                    data={item}
-                    onClick={() => navigate(`/product/${item.slug}`)}
-                  />
-                </div>
-              ))}
-            </div>
+            {!productLoading ? (
+              <div className="deals-header">
+                {products?.map((item) => (
+                  <div key={item._id}>
+                    <ProductCard
+                      data={item}
+                      onClick={() => navigate(`/product/${item.slug}`)}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ProductSkeleton />
+            )}
           </div>
         ) : (
           <div>
-            <ProductSkeleton />
+            <NoData />
           </div>
         )}
         {/* best deals end */}

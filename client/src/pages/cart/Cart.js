@@ -7,27 +7,22 @@ import { textShorter } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import NoData from "../../components/noData/NoData";
 import { useAuth } from "../../context/authProvider";
-import axios from "axios";
-import DropIn from "braintree-web-drop-in-react";
-import toast from "react-hot-toast";
 
 const Cart = () => {
   const count = 1;
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth();
-  const [cart, setCart] = useCart();
-  const [total, setTotal] = useState([]);
-  const [paymentScreen, setPaymentScreen] = useState(false);
-  const [clientToken, setClientToken] = useState("");
-  const [instance, setInstance] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [auth] = useAuth();
+  const { cart, setCart, cartTotal, setCartTotal } = useCart();
 
   useEffect(() => {
     const totalCount = cart.map((item) => item.price * item.total);
-    setTotal(totalCount);
+    const count = totalCount?.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    );
+
+    setCartTotal(count);
   }, [cart]);
-  const summaryTotal = () =>
-    total.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   const addItem = (id) => {
     const selectedProduct = cart.filter((itm) => {
@@ -36,10 +31,15 @@ const Cart = () => {
       }
       return itm;
     });
-    const totalCount = selectedProduct.map((item) => item.price * item.total);
-    setTotal(totalCount);
+    const totalCount = selectedProduct
+      .map((item) => item.price * item.total)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    setCartTotal(totalCount);
     setCart(selectedProduct);
     localStorage.setItem("cart", JSON.stringify(selectedProduct));
+
+    localStorage.setItem("cartTotal", JSON.stringify(totalCount));
   };
   const removeItem = (id) => {
     const filteredData = cart?.filter((itm) => {
@@ -48,50 +48,22 @@ const Cart = () => {
         return itm;
       } else if (itm._id !== id) return itm;
     });
-    const totalCount = filteredData.map((item) => item.price * item.total);
-    setTotal(totalCount);
+    const totalCount = filteredData
+      .map((item) => item.price * item.total)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    setCartTotal(totalCount);
     setCart(filteredData);
     localStorage.setItem("cart", JSON.stringify(filteredData));
+    localStorage.setItem("cartTotal", JSON.stringify(totalCount));
   };
 
-  const getToken = async () => {
-    try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/order/braintree/token`
-      );
-      setClientToken(data?.clientToken);
-    } catch (error) {
-      console.log(error);
-    }
+  const toPaymentPage = () => {
+    navigate(`/payment`);
   };
-  useEffect(() => {
-    getToken();
-  }, [auth?.token]);
 
-  const handlePayment = async () => {
-    try {
-      setLoading(true);
-      const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/order/braintree/payment`,
-        {
-          nonce,
-          cart,
-          id: auth?.user?._id,
-        }
-      );
-      setLoading(false);
-      localStorage.removeItem("cart");
-      setCart([]);
-      navigate("/dashboard/user");
-      toast.success("Payment Completed Successfully ");
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
   return (
-    <Layout title={`Cart-Emart`}>
+    <Layout title={`Cart Helmetto`}>
       {!auth?.user?.admin ? (
         <div>
           <div className="cart-mainWrapper">
@@ -123,7 +95,7 @@ const Cart = () => {
                           <span>{item.total}</span>
                           <button onClick={() => addItem(item._id)}>+</button>
                         </td>
-                        <td className="total">AED {item.total * item.price}</td>
+                        <td className="total">₹ {item.total * item.price}</td>
                       </tr>
                     ))}
                   </>
@@ -133,12 +105,32 @@ const Cart = () => {
                   <NoData title={"No Items in Cart"} />
                 </>
               )}
-              <button
-                id="countinue-shop-button"
-                onClick={() => navigate("/")}
-              >{`<- Continue Shopping`}</button>
+              <div className="payment-continue-web">
+                <button
+                  id="countinue-shop-button"
+                  onClick={() => navigate("/")}
+                >{`<- Continue Shopping`}</button>
+                <button
+                  className="payment-button"
+                  onClick={toPaymentPage}
+                  disabled={cartTotal === 0}
+                >{`Continue Payment ₹${cartTotal}`}</button>
+              </div>
             </div>
             <div className="cart-wrapper-onMobile">
+              <div className="payment-continue-mobile">
+                {cartTotal === 0 ? (
+                  <button
+                    id="countinue-shop-button"
+                    onClick={() => navigate("/")}
+                  >{`<- Continue Shopping`}</button>
+                ) : (
+                  <button
+                    className="payment-button"
+                    onClick={toPaymentPage}
+                  >{`Continue Payment ₹${cartTotal}`}</button>
+                )}
+              </div>
               <div className="cart-section-header">
                 <h3>Shopping Cart</h3>
               </div>
@@ -169,79 +161,8 @@ const Cart = () => {
                 </>
               )}
             </div>
-            {cart.length > 0 ? (
-              <div className="cart-container-right">
-                <div className="cart-section-header">
-                  <h3>Order Summary</h3>
-                </div>
-                <div className="cart-section-body">
-                  <div id="addressUpdate">
-                    {auth?.user?.address ? (
-                      <span>{`Ship to : ${auth?.user?.address}`}</span>
-                    ) : (
-                      <button
-                        id="addressUpdate-btn"
-                        onClick={() =>
-                          navigate("/dashboard/user", {
-                            state: { dashboard: "Profile", profile: "/cart" },
-                          })
-                        }
-                      >
-                        Need to update Address
-                      </button>
-                    )}
-                  </div>
-                  <div className="cart-section-body-summary">
-                    <span>Total</span>
-                    <span>{`AED ${summaryTotal()}`}</span>
-                  </div>
 
-                  {auth.token ? (
-                    <>
-                      {paymentScreen ? (
-                        <>
-                          {!clientToken || !auth?.token || !cart?.length ? (
-                            ""
-                          ) : (
-                            <div id="payment-screen-wrapper">
-                              <DropIn
-                                options={{
-                                  authorization: clientToken,
-                                  paypal: {
-                                    flow: "vault",
-                                  },
-                                }}
-                                onInstance={(instance) => setInstance(instance)}
-                              />
-
-                              <button
-                                id="payment-btn"
-                                onClick={handlePayment}
-                                disabled={
-                                  loading || !instance || !auth?.user?.address
-                                }
-                              >
-                                {loading ? "Processing ...." : "Payment"}
-                              </button>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <button onClick={() => setPaymentScreen(true)}>
-                          Check Out
-                        </button>
-                      )}
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => navigate("/login", { state: "/cart" })}
-                    >
-                      Please Login to Checkout
-                    </button>
-                  )}
-                </div>
-              </div>
-            ) : null}
+            {/* {cart.length > 0 ? <Payment total={total} /> : null} */}
           </div>
         </div>
       ) : (

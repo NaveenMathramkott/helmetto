@@ -15,6 +15,7 @@ import UserRoute from "./components/routes/UserRoute";
 import Cart from "./pages/cart/Cart";
 import ProductCatList from "./pages/product/ProductCatList";
 import { useEffect } from "react";
+import Payment from "./pages/payment/Payment";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/product/:slug" element={<Product />} />
         <Route path="/login" element={<Login />} />
         <Route path="/productCatList" element={<ProductCatList />} />

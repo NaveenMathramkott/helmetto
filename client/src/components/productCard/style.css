@@ -72,6 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2px;
   border-radius: 0 10px 0 10px;
 }
 
@@ -87,7 +88,7 @@
   right: 14px;
   border-radius: 6px;
   border: none;
-  padding: 2px;
+  padding: 2px 5px;
   background-color: var(--gold);
   cursor: pointer;
 }
