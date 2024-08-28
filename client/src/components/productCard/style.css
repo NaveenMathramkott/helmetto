@@ -95,10 +95,19 @@
 
 @media screen and (max-width: 594px) {
   .productCard-container {
-    width: 180px;
-    height: 180px;
+    max-width: 140px;
+    height: 280px;
+    padding-bottom: 20px;
   }
-  .productCard-image-container {
-    height: 60%;
+
+  #add-to-cart-product-button {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    border-radius: 6px;
+    border: none;
+    padding: 2px 5px;
+    background-color: var(--gold);
+    cursor: pointer;
   }
 }
