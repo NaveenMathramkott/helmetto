@@ -145,7 +145,7 @@ const HomePage = () => {
           </div>
         ) : (
           <div style={{ padding: "20px" }}>
-            <NoData />
+            <NoData title={"No Category Found"} />
           </div>
         )}
         {/* shop category ends */}
@@ -173,7 +173,7 @@ const HomePage = () => {
           </div>
         ) : (
           <div>
-            <NoData />
+            <NoData title={"No Product Found"} />
           </div>
         )}
         {/* best deals end */}
