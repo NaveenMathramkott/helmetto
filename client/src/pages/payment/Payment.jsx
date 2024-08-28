@@ -70,7 +70,7 @@ const Payment = () => {
                 id="addressUpdate-btn"
                 onClick={() =>
                   navigate("/dashboard/user", {
-                    state: { dashboard: "Profile", profile: "/cart" },
+                    state: { dashboard: "Profile", profile: "/payment" },
                   })
                 }
               >
@@ -120,7 +120,7 @@ const Payment = () => {
               )}
             </>
           ) : (
-            <button onClick={() => navigate("/login", { state: "/cart" })}>
+            <button onClick={() => navigate("/login", { state: "/payment" })}>
               Please Login to Checkout
             </button>
           )}

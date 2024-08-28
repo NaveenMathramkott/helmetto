@@ -27,14 +27,7 @@
   color: #fff;
   line-height: 160px;
   text-align: center;
-  /* background: rgb(0, 142, 204);
-  background: linear-gradient(
-    180deg,
-    rgba(0, 142, 204, 1) 0%,
-    rgba(0, 212, 255, 1) 0%,
-    rgba(0, 142, 192, 0.10976890756302526) 87%
-  ); */
-  object-fit: fill;
+  object-fit: inherit;
 }
 
 .category-header {

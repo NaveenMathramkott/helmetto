@@ -103,6 +103,7 @@ option {
   .payment-continue-web {
     display: none;
   }
+
   .payment-continue-mobile {
     top: 20px;
     z-index: 100rem;

@@ -112,7 +112,6 @@ const CreateProduct = () => {
       toast.error(error);
     }
   };
-  console.log("data category", category);
 
   const getAllCategory = async () => {
     try {
