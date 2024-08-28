@@ -87,7 +87,7 @@ const ProductCatList = () => {
               ))}
             </div>
           ) : (
-            <NoData />
+            <NoData title={"No Product found in this category"} />
           )}
         </div>
       </div>
