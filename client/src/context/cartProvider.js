@@ -1,5 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
-import { configOptions } from "./data";
+// import { configOptions } from "./data";
 
 const CartContext = createContext();
 const CartProvider = ({ children }) => {
