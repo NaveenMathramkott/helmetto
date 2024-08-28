@@ -6,7 +6,6 @@
   align-items: center;
   background-color: var(--primary);
   padding: 0 40px 0 40px;
-  border-bottom: 1px solid #ededed;
 }
 .navbar-secondary {
   background-color: var(--primary);

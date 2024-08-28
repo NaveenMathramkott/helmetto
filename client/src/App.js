@@ -16,6 +16,7 @@ import Cart from "./pages/cart/Cart";
 import ProductCatList from "./pages/product/ProductCatList";
 import { useEffect } from "react";
 import Payment from "./pages/payment/Payment";
+import HelmetCustomization from "./components/configurator/HelmetCustomization";
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/product/:slug" element={<Product />} />
+        <Route path="/configurator" element={<HelmetCustomization />} />
         <Route path="/login" element={<Login />} />
         <Route path="/productCatList" element={<ProductCatList />} />
         <Route path="/register" element={<Register />} />

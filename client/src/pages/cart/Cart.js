@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./style.css";
 import Layout from "../../components/layouts/Layout";
 import { useCart } from "../../context/cartProvider";
@@ -7,6 +7,7 @@ import { textShorter } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import NoData from "../../components/noData/NoData";
 import { useAuth } from "../../context/authProvider";
+import { Badge } from "antd";
 
 const Cart = () => {
   const count = 1;
@@ -15,14 +16,45 @@ const Cart = () => {
   const { cart, setCart, cartTotal, setCartTotal } = useCart();
 
   useEffect(() => {
-    const totalCount = cart.map((item) => item.price * item.total);
-    const count = totalCount?.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    );
-
-    setCartTotal(count);
+    const totalCount = cart
+      ?.map((item) => {
+        if (item?.parts) {
+          const data = item?.parts
+            ?.map((innerItem) => {
+              if (innerItem.price) {
+                return innerItem.price;
+              } else {
+                return null;
+              }
+            })
+            .reduce(
+              (accumulator, currentValue) => accumulator + currentValue,
+              0
+            );
+          const totalData = (item.price + data) * item.total;
+          return totalData;
+        } else {
+          return item.price * item.total;
+        }
+      })
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    console.log("total", totalCount);
+    localStorage.setItem("cartTotal", JSON.stringify(totalCount));
   }, [cart]);
+
+  const getTotalForCustom = (arr, quantity) => {
+    const totalArr = arr
+      ?.map((innerItem) => {
+        if (innerItem.price) {
+          return innerItem.price;
+        } else {
+          return null;
+        }
+      })
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    return totalArr * quantity;
+  };
 
   const addItem = (id) => {
     const selectedProduct = cart.filter((itm) => {
@@ -78,24 +110,42 @@ const Cart = () => {
                     <th className="photo">Photo</th>
                     <th className="name">Name</th>
                     <th className="quantity">Quantity</th>
+                    <th className="custom">Custom</th>
                     <th className="price">Price</th>
                   </tr>
                   <>
                     {cart?.map((item, index) => (
-                      <tr className="cart-list-data" key={item._id}>
+                      <tr className="cart-list-data" key={item?._id}>
                         <td className="id">{index + 1}</td>
                         <td className="photo">
-                          <ImageViewer src={item.photo} alt={item.name} />
+                          {item?.parts ? (
+                            <Badge.Ribbon
+                              text="custom"
+                              color="red"
+                              placement="start"
+                            >
+                              <ImageViewer src={item?.photo} alt={item?.name} />
+                            </Badge.Ribbon>
+                          ) : (
+                            <ImageViewer src={item?.photo} alt={item?.name} />
+                          )}
                         </td>
-                        <td className="name">{textShorter(item.name)}</td>
+                        <td className="name">{textShorter(item?.name)}</td>
                         <td className="quantity">
-                          <button onClick={() => removeItem(item._id)}>
+                          <button onClick={() => removeItem(item?._id)}>
                             -
                           </button>
-                          <span>{item.total}</span>
-                          <button onClick={() => addItem(item._id)}>+</button>
+                          <span>{item?.total}</span>
+                          <button onClick={() => addItem(item?._id)}>+</button>
                         </td>
-                        <td className="total">₹ {item.total * item.price}</td>
+                        {item?.parts ? (
+                          <td className="custom">
+                            ₹ {getTotalForCustom(item?.parts, item?.total)}
+                          </td>
+                        ) : (
+                          <td className="custom">Standard</td>
+                        )}
+                        <td className="total">₹ {item?.total * item?.price}</td>
                       </tr>
                     ))}
                   </>
@@ -112,13 +162,23 @@ const Cart = () => {
                 >{`<- Continue Shopping`}</button>
                 <button
                   className="payment-button"
-                  onClick={toPaymentPage}
+                  onClick={() => {
+                    if (auth.token) {
+                      toPaymentPage();
+                    } else {
+                      navigate("/login", { state: "/cart" });
+                    }
+                  }}
                   disabled={cartTotal === 0}
-                >{`Continue Payment ₹${cartTotal}`}</button>
+                >
+                  {auth.token
+                    ? `Continue Payment ₹${cartTotal}`
+                    : `Please login to Checkout`}
+                </button>
               </div>
             </div>
             <div className="cart-wrapper-onMobile">
-              <div className="payment-continue-mobile">
+              <div className="payment-continue-mobile" style={{ zIndex: 10 }}>
                 {cartTotal === 0 ? (
                   <button
                     id="countinue-shop-button"
@@ -127,8 +187,19 @@ const Cart = () => {
                 ) : (
                   <button
                     className="payment-button"
-                    onClick={toPaymentPage}
-                  >{`Continue Payment ₹${cartTotal}`}</button>
+                    onClick={() => {
+                      if (auth.token) {
+                        toPaymentPage();
+                      } else {
+                        navigate("/login", { state: "/cart" });
+                      }
+                    }}
+                    disabled={cartTotal === 0}
+                  >
+                    {auth.token
+                      ? `Continue Payment ₹${cartTotal}`
+                      : `Please login to Checkout`}
+                  </button>
                 )}
               </div>
               <div className="cart-section-header">
@@ -137,20 +208,33 @@ const Cart = () => {
               {cart.length > 0 ? (
                 <div className="cart-card-container">
                   {cart?.map((item) => (
-                    <div className="cart-mobile-container" key={item._id}>
+                    <div className="cart-mobile-container" key={item?._id}>
                       <div className="cart-mobile-image">
-                        <ImageViewer src={item.photo} alt={item.name} />
+                        {item?.parts ? (
+                          <Badge.Ribbon
+                            text="custom"
+                            color="red"
+                            placement="start"
+                            style={{ zIndex: 5 }}
+                          >
+                            <ImageViewer src={item?.photo} alt={item?.name} />
+                          </Badge.Ribbon>
+                        ) : (
+                          <ImageViewer src={item?.photo} alt={item?.name} />
+                        )}
                       </div>
-                      <div>{item.name}</div>
+                      <div>{item?.name}</div>
                       <div className="cart-mobile-total">
                         <div className="cart-mobile-quantity">
-                          <button onClick={() => removeItem(item._id)}>
+                          <button onClick={() => removeItem(item?._id)}>
                             -
                           </button>
-                          <span>{item.total}</span>
-                          <button onClick={() => addItem(item._id)}>+</button>
+                          <span>{item?.total}</span>
+                          <button onClick={() => addItem(item?._id)}>+</button>
                         </div>
-                        <div className="total">{item.total * item.price}</div>
+                        <div className="total">
+                          ₹ {item?.total * item?.price}
+                        </div>
                       </div>
                     </div>
                   ))}

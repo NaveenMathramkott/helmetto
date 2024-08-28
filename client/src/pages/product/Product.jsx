@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import "./style.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getOffer } from "../../utils/utils";
 import { useCart } from "../../context/cartProvider";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import Loader from "../../components/loader/Loader";
 
 const Product = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const { cart, setCart } = useCart();
   const [product, setProduct] = useState([]);
   // const [quantity, setQuantity] = useState(1);
@@ -73,7 +74,11 @@ const Product = () => {
             </div> */}
             <div className="button-buy-cart">
               <button onClick={() => onAddToCart(product)}>Add to Cart</button>
-              <button>Customize</button>
+              <button
+                onClick={() => navigate("/configurator", { state: product })}
+              >
+                Customize
+              </button>
             </div>
             {/* <div className="button-configurator">
               <button>Customize</button>

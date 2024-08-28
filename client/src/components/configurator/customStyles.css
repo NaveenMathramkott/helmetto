@@ -1,0 +1,416 @@
+.app-MainWrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.customHeader-mainWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100rem;
+}
+
+/* configrator style starts */
+.configurator-mainWrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgb(0, 0, 0, 0.4);
+  background: radial-gradient(
+    circle,
+    rgba(1, 2, 8, 0) 0%,
+    rgba(0, 0, 0, 0.7624299719887955) 100%
+  );
+  width: 100vw;
+  height: 100vh;
+}
+.configurator {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2rem;
+  background: rgb(51, 51, 51, 0.8);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  width: 250px;
+  /* filter: sepia(60%) contrast(90%) brightness(90%); */
+}
+
+.title {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #00c6ff;
+}
+
+.config-section {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 14px;
+  color: #ccc;
+  display: block;
+  padding: 10px;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  background-color: #222;
+  color: #00c6ff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.color-selection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.color-option {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-red {
+  background-color: #ff4e4e;
+}
+.color-blue {
+  background-color: #4e6aff;
+}
+.color-green {
+  background-color: #4eff4e;
+}
+
+.btn-section {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+}
+
+.btn-save {
+  width: 46%;
+  padding: 10px;
+  background-color: #00c6ff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.btn-cancel {
+  width: 46%;
+  padding: 10px;
+  color: #00c6ff;
+  border: 1px solid #00c6ff;
+  background-color: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.btn-cancel:hover {
+  color: #008fbf;
+}
+.btn-save:hover {
+  background-color: #008fbf;
+}
+
+.modal-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 300px;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.modal-content {
+  /* background-color: #333; */
+  padding: 10px;
+  border-radius: 15px;
+  color: #ffffff;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-content > ul {
+  text-align: center;
+  width: max-content;
+  border: 1px solid gray;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.modal-content > ul:hover {
+  background-color: rgba(107, 106, 106, 0.6);
+}
+
+.close-button {
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.btn-close-modal {
+  background-color: #00c6ff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-close-modal:hover {
+  background-color: #008fbf;
+}
+.color-selector-btn > button {
+  position: fixed;
+  rotate: -90deg;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  padding: 10px;
+  color: #00c6ff;
+  border: 1px solid #00c6ff;
+  background-color: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px 0;
+}
+.color-content > button {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-content {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+.color-content.move-up {
+  animation: onMoveUp 0.4s linear forwards;
+}
+.color-content.move-down {
+  animation: onMoveDown 0.4s linear forwards;
+}
+@keyframes onMoveUp {
+  from {
+    left: -10px;
+  }
+  to {
+    left: 30px;
+  }
+}
+@keyframes onMoveDown {
+  from {
+    left: 30px;
+  }
+  to {
+    left: -60px;
+  }
+}
+.color-selector {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+/* configrator style ends */
+
+/* Header style starts */
+
+.header-mainWrapper {
+  position: fixed;
+  top: 100px;
+  right: 10px;
+}
+
+.cartButton {
+  width: auto;
+  padding: 10px;
+  color: #00c6ff;
+  border: 1px solid #00c6ff;
+  background-color: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-size: 16px;
+  margin: 5px 0;
+}
+.header-price {
+  font-size: 1.8rem;
+  font-weight: 300;
+  display: flex;
+  justify-content: flex-end;
+}
+.header-price-list {
+  position: absolute;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.price-list-separator {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  font-weight: 400;
+}
+@media screen and (max-width: 890px) {
+  .header-mainWrapper {
+    top: 80px;
+  }
+}
+
+/* Header style ends */
+
+/* tooltip style starts */
+
+/* Tooltip CSS */
+.tooltip {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 100px;
+  color: white;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1000;
+  background-color: transparent;
+  animation: rotate 6s linear infinite, opac 3s linear forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes opac {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* tooltip style ends */
+
+/* Loading container style starts */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveLine {
+  0% {
+    stroke-dashoffset: 4500;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 4500;
+  }
+}
+.animate-moveLine {
+  animation: moveLine 6s linear infinite;
+}
+
+.appLoading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100rem;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(68, 67, 67);
+}
+/* Loading container style ends */
+
+/* footer style starts */
+
+.bottom-footer {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: gray;
+  cursor: default;
+}
+
+/* footer style ends */
