@@ -38,7 +38,7 @@ const Cart = () => {
         }
       })
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-    console.log("total", totalCount);
+    setCartTotal(totalCount);
     localStorage.setItem("cartTotal", JSON.stringify(totalCount));
   }, [cart]);
 
@@ -214,7 +214,6 @@ const Cart = () => {
                           <Badge.Ribbon
                             text="custom"
                             color="red"
-                            placement="start"
                             style={{ zIndex: 5 }}
                           >
                             <ImageViewer src={item?.photo} alt={item?.name} />
@@ -233,7 +232,7 @@ const Cart = () => {
                           <button onClick={() => addItem(item?._id)}>+</button>
                         </div>
                         <div className="total">
-                          ₹ {item?.total * item?.price}
+                          ₹{item?.total * item?.price}
                         </div>
                       </div>
                     </div>

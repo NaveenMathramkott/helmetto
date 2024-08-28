@@ -26,13 +26,13 @@ const ProductCard = ({ data, onClick }) => {
           <img src={data?.photo} alt={data?.name} />
         </div>
         <div id="detail-section">
-          <span id="name">{textShorter(data?.name)}</span>
+          <span id="name">{textShorter(data?.name, 24)}</span>
 
           <span id="price">
             <span id="price-mrp">₹ {getOffer(data?.price, data?.offer)}</span> ₹{" "}
             {data?.price}
           </span>
-          {data?.offer && <span id="offer">Save - ₹ {balance}</span>}
+          {data?.offer && <span id="offer">Save ₹{balance}</span>}
         </div>
       </div>
       <button id="add-to-cart-product-button" onClick={() => onAddToCart(data)}>

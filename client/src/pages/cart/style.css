@@ -95,7 +95,7 @@ option {
   border: none;
   padding: 6px;
   border-radius: 10px;
-  min-width: 350px;
+  min-width: 250px;
   font-size: 1rem;
 }
 
@@ -130,19 +130,21 @@ option {
     flex-wrap: wrap;
   }
   .cart-mobile-container > .cart-mobile-image {
-    width: 220px;
+    width: 180px;
     height: auto;
   }
   .cart-mobile-container {
-    width: 400px;
+    width: 300px;
     height: auto;
     margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px var(--primary);
   }
   .cart-mobile-quantity {
     display: flex;
@@ -169,7 +171,7 @@ option {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 50%;
+    width: 80%;
     margin: 10px 2px;
   }
 }

@@ -3,9 +3,9 @@ export const getOffer = (price, offer) => {
   return data + price;
 };
 
-export const textShorter = (text) => {
-  const data = text.slice(0, 32);
-  if (data.length > 31) {
+export const textShorter = (text, shorter = 31) => {
+  const data = text.slice(0, shorter);
+  if (data.length > shorter) {
     return `${data}...`;
   } else {
     return `${data}.`;

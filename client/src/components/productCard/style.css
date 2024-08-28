@@ -2,15 +2,15 @@
   width: 260px;
   height: 240px;
   background-color: var(--background-primary);
-  border-radius: 10px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  box-shadow: 1px 1px 6px var(--primary);
 }
 .productCard-image-container {
   height: 65%;
-  object-fit: contain;
 }
 
 .productCard-image-container > img {
@@ -73,7 +73,7 @@
   justify-content: center;
   align-items: center;
   padding: 2px;
-  border-radius: 0 10px 0 10px;
+  border-radius: 0 6px 0 10px;
 }
 
 .offer-tag > span {
@@ -84,11 +84,21 @@
 }
 #add-to-cart-product-button {
   position: absolute;
-  bottom: 2px;
-  right: 14px;
+  bottom: 4px;
+  right: 4px;
   border-radius: 6px;
   border: none;
   padding: 2px 5px;
   background-color: var(--gold);
   cursor: pointer;
+}
+
+@media screen and (max-width: 594px) {
+  .productCard-container {
+    width: 180px;
+    height: 180px;
+  }
+  .productCard-image-container {
+    height: 60%;
+  }
 }

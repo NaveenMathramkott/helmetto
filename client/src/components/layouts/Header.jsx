@@ -133,7 +133,7 @@ const Header = () => {
           </div>
           {!auth.user ? (
             <NavLink className="linkBtn" to="/login">
-              <IoIosPersonAdd /> <span>SignUp / SignIn</span>
+              <IoIosPersonAdd /> <span>SignIn</span>
             </NavLink>
           ) : (
             <div className="profile-options">
@@ -162,59 +162,59 @@ const Header = () => {
         </div>
         <>
           <div className="onMobile-view">
-            {!auth.user ? (
-              <NavLink className="linkBtn" to="/login">
-                <IoIosPersonAdd /> <span>SignUp / SignIn</span>
-              </NavLink>
-            ) : (
-              <div className="mobileView-header">
-                <div className="search-box-mobileView">
-                  <div className="search-input">
-                    <AutoComplete
-                      suffixIcon={<IoIosSearch />}
-                      allowClear
-                      className="autoComplete"
-                      onSearch={onChangeSearchInput}
-                      placeholder="Search products"
-                      options={productList}
-                      onSelect={(e, option) =>
-                        navigate(`/product/${option.item.slug}`)
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="drawer-mobileView">
-                  <DrawerTab
-                    nav={
-                      <Badge count={cart.length}>
-                        <Link className="linkBtn" to={"/cart"}>
-                          <FaShoppingCart />
-                          <span>Cart</span>
-                        </Link>
-                      </Badge>
+            <div className="mobileView-header">
+              <div className="search-box-mobileView">
+                <div className="search-input">
+                  <AutoComplete
+                    suffixIcon={<IoIosSearch />}
+                    allowClear
+                    className="autoComplete"
+                    onSearch={onChangeSearchInput}
+                    placeholder="Search products"
+                    options={productList}
+                    onSelect={(e, option) =>
+                      navigate(`/product/${option.item.slug}`)
                     }
-                    title={
-                      <span style={{ color: "#80bcbd" }}>
-                        {auth?.user?.name}
-                      </span>
-                    }
-                  >
-                    <div className="onMobileView">
-                      <button
-                        onClick={() =>
-                          navigate(
-                            `/dashboard/${auth.user.admin ? "admin" : "user"}`
-                          )
-                        }
-                      >
-                        Dashboard
-                      </button>
-                      <button onClick={handleLogout}>Logout</button>
-                    </div>
-                  </DrawerTab>
+                  />
                 </div>
               </div>
-            )}
+              <div className="drawer-mobileView">
+                <DrawerTab
+                  nav={
+                    <Badge count={cart.length}>
+                      <Link className="linkBtn" to={"/cart"}>
+                        <FaShoppingCart />
+                        <span>Cart</span>
+                      </Link>
+                    </Badge>
+                  }
+                  title={
+                    <span style={{ color: "#80bcbd" }}>{auth?.user?.name}</span>
+                  }
+                >
+                  <div className="onMobileView">
+                    {!auth.user ? (
+                      <Link className="linkBtn" to={"/login"}>
+                        <IoIosPersonAdd /> <span>SignUp / SignIn</span>
+                      </Link>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() =>
+                            navigate(
+                              `/dashboard/${auth.user.admin ? "admin" : "user"}`
+                            )
+                          }
+                        >
+                          Dashboard
+                        </button>
+                        <button onClick={handleLogout}>Logout</button>
+                      </>
+                    )}
+                  </div>
+                </DrawerTab>
+              </div>
+            </div>
           </div>
         </>
       </nav>
