@@ -1,7 +1,7 @@
-import banner01 from "../assets/banner01.png";
-import banner02 from "../assets/banner02.png";
-import banner03 from "../assets/banner03.png";
-import banner04 from "../assets/banner04.png";
+// import banner01 from "../assets/banner01.png";
+// import banner02 from "../assets/banner02.png";
+// import banner03 from "../assets/banner03.png";
+// import banner04 from "../assets/banner04.png";
 
 export const PRICE_DATA = [
   {
@@ -34,18 +34,22 @@ export const PRICE_DATA = [
 export const CAROUSEL_DATA = [
   {
     id: 1,
-    source: banner03,
+    source:
+      "https://res.cloudinary.com/dqibvgjoz/image/upload/v1724910111/banner02_t4nb3h.jpg",
   },
   {
     id: 2,
-    source: banner02,
+    source:
+      "https://res.cloudinary.com/dqibvgjoz/image/upload/v1724910111/banner03_evklzd.jpg",
   },
   {
     id: 3,
-    source: banner01,
+    source:
+      "https://res.cloudinary.com/dqibvgjoz/image/upload/v1724910111/banner01_qaslwt.jpg",
   },
   {
     id: 4,
-    source: banner04,
+    source:
+      "https://res.cloudinary.com/dqibvgjoz/image/upload/v1724909176/banner04_yxvpmi.png",
   },
 ];
