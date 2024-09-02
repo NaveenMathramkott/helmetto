@@ -26,6 +26,8 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllCategory();
+    getAllProducts();
+    filterProduct();
   }, []);
 
   useEffect(() => {
@@ -46,7 +48,8 @@ const HomePage = () => {
       setProductLoading(false);
     } catch (error) {
       setProductLoading(false);
-      console.log(error);
+    } finally {
+      setProductLoading(false);
     }
   };
 
@@ -62,7 +65,8 @@ const HomePage = () => {
       }
     } catch (error) {
       setCategoryLoading(false);
-      console.log(error);
+    } finally {
+      setCategoryLoading(false);
     }
   };
 
@@ -80,7 +84,8 @@ const HomePage = () => {
       setCategoryLoading(false);
     } catch (error) {
       setCategoryLoading(false);
-      console.log(error);
+    } finally {
+      setProductLoading(false);
     }
   };
 
