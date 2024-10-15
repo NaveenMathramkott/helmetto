@@ -81,29 +81,19 @@ git clone https://github.com/NaveenMathramkott/MERN_Ecommecre.git
 cd MERN_Ecommecre
 ```
 
-**Install dependencies**
-
-```bash
-  cd server
-  npm install
-```
-
-```bash
-  cd client
-  npm install
-```
-
 **Start the server**
 
 ```bash
   cd server
-  npm run start
+  npm install
+   npm run start
 ```
 
 **Start the Client**
 
 ```bash
-  cd frontend
+  cd client
+  npm install
   npm start
 ```
 
