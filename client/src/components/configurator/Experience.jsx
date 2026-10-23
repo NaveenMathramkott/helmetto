@@ -11,22 +11,31 @@ import Configurator from "./Configurator";
 import * as THREE from "three";
 import { useCustomization } from "../../context/Customization";
 import { colorPallete } from "../../context/data";
-import MouseCircleText from "./MouseCircleText";
-import Loader from "./CustomLoader";
+import CustomLoader from "./CustomLoader";
 import CustomBackgroundShader from "./Shader";
 import Header from "../layouts/Header";
 import CartButton from "./CartButton";
 import { Toaster } from "react-hot-toast";
+import { Button } from "../../components/ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "../../components/ui/dialog";
+import { FiDroplet, FiX, FiEye, FiRotateCcw } from "react-icons/fi";
 
 const Experience = () => {
   const sceneRef = useRef();
-  const { selectedMeshes, setCoverColor } = useCustomization();
+  const { selectedMeshes, setCoverColor, coverColor } = useCustomization();
 
   const [showTooltip, setShowTooltip] = useState(false);
-
   const [clickedMesh, setClickedMesh] = useState(null);
   const [openConfigurator, setOpenConfigurator] = useState(false);
-  const [openColorPallete, setOpenColorPallete] = useState(false);
+  const [openColorPalette, setOpenColorPalette] = useState(false);
 
   // to disable the controls after focusing mesh
   const [disableControl, setDisableControl] = useState(true);
@@ -75,7 +84,7 @@ const Experience = () => {
     <>
       <div className="app-MainWrapper">
         <Canvas
-          drp={[1, 2]}
+          dpr={[1, 2]}
           camera={{ position: [0, 0, 3], fov: 35 }}
           style={{ touchAction: "none" }}
         >
@@ -90,10 +99,10 @@ const Experience = () => {
             enabled={disableControl}
             speed={1.5}
             global
-            polar={[-Math.PI / 4, Math.PI / 4]} // Allow half rotation on the vertical axis (both positive and negative)
-            rotation={[0, Math.PI / 2, 0]} // Initial rotation
+            polar={[-Math.PI / 4, Math.PI / 4]}
+            rotation={[0, Math.PI / 2, 0]}
           >
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<CustomLoader />}>
               <Stage environment="city" intensity={0.6} castShadow={false}>
                 <RandomizedLight
                   castShadow
@@ -111,46 +120,106 @@ const Experience = () => {
             </Suspense>
           </PresentationControls>
         </Canvas>
-        {showTooltip && <MouseCircleText />}
-        <div className="customHeader-mainWrapper">
+
+        {/* Header Overlay */}
+        <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
           <Header />
         </div>
 
-        <div className="color-selector-btn">
-          {!openColorPallete && (
-            <button onClick={() => setOpenColorPallete(true)}>Theme</button>
-          )}
-        </div>
-        {openColorPallete && (
-          <div
-            className={`color-content ${
-              openColorPallete ? "move-up" : "move-down"
-            }`}
-          >
-            <>
-              {colorPallete.map((item) => (
-                <div
-                  key={item.name}
-                  className="color-selector"
-                  style={{ backgroundColor: `${item.color}` }}
-                  onClick={() => setCoverColor(item.color)}
-                />
-              ))}
-            </>
+        {/* Color Palette Dialog */}
+        <Dialog open={openColorPalette} onOpenChange={setOpenColorPalette}>
+          <DialogTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="fixed left-4 top-1/2 -translate-y-1/2 z-50 bg-gray-900/80 backdrop-blur-sm border-gray-700 text-white hover:bg-gray-800 rounded-full p-3 shadow-xl"
+            >
+              <FiDroplet className="h-5 w-5" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-sm bg-gray-900 border-gray-700 p-4 overflow-hidden">
+            <DialogHeader className="pb-4 border-b border-gray-700">
+              <DialogTitle className="text-lg font-semibold text-white flex items-center justify-between">
+                <FiDroplet className="h-4 w-4 text-teal-400 mr-2" />
+                Helmet Colors
+                <FiX className="h-4 w-4" />
+              </DialogTitle>
+              <DialogDescription className="text-gray-500 text-sm mt-1">
+                Select a color for the outer helmet shell
+              </DialogDescription>
+            </DialogHeader>
 
-            <button onClick={() => setOpenColorPallete(false)}>X</button>
-          </div>
-        )}
-        <div className="app-headerContainer">
+            <div className="p-4">
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {colorPallete.map((item) => (
+                  <Button
+                    key={item.name}
+                    variant="ghost"
+                    size="icon"
+                    className="w-10 h-10 rounded-full border-2 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 relative"
+                    style={{
+                      backgroundColor: item.color,
+                      borderColor:
+                        coverColor === item.color ? "white" : "transparent",
+                      boxShadow:
+                        coverColor === item.color
+                          ? "0 0 0 2px white, 0 0 12px rgba(20, 184, 166, 0.5)"
+                          : "none",
+                    }}
+                    onClick={() => {
+                      setCoverColor(item.color);
+                      setOpenColorPalette(false);
+                    }}
+                    aria-label={item.name}
+                  >
+                    {coverColor === item.color && (
+                      <FiEye className="h-5 w-5 text-white drop-shadow-lg" />
+                    )}
+                  </Button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 pt-3 border-t border-gray-700">
+                <span className="text-xs text-gray-400 flex-1">
+                  Current:{" "}
+                  {colorPallete.find((c) => c.color === coverColor)?.name ||
+                    "Custom"}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700"
+                  onClick={() => {
+                    setCoverColor("#0a1828");
+                    setOpenColorPalette(false);
+                  }}
+                >
+                  <FiRotateCcw className="h-3.5 w-3.5 mr-1" />
+                  Reset
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Cart Button */}
+        <div className="fixed top-24 right-4 z-40 pointer-events-auto">
           <CartButton />
         </div>
-        <div className="bottom-footer">
-          Click on Helmet to configure - Created with love by Amouxtek
+
+        {/* Bottom Footer */}
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 text-center pointer-events-none">
+          <p className="text-xs text-gray-400 bg-gray-900/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700">
+            Click on helmet parts to configure
+          </p>
         </div>
+
+        {/* Configurator Dialog */}
         {openConfigurator && (
           <Configurator
-            handleCancel={() => onMeshClickFunction(null)}
+            open={openConfigurator}
+            onOpenChange={setOpenConfigurator}
             selectedMesh={selectedCustomMesh}
+            handleCancel={() => onMeshClickFunction(null)}
           />
         )}
       </div>
