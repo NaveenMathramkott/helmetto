@@ -4,14 +4,24 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/authProvider";
-import { CiLock } from "react-icons/ci";
-import { CiUnlock } from "react-icons/ci";
-import { MdOutlineEmail } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { LuShieldQuestion } from "react-icons/lu";
-import { FaRegAddressCard } from "react-icons/fa";
-
-import "./style.css";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "../../../components/ui/card";
+import {
+  FiMail,
+  FiLock,
+  FiUnlock,
+  FiUser,
+  FiMapPin,
+  FiHelpCircle,
+} from "react-icons/fi";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -21,12 +31,11 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [answer, setAnswer] = useState("");
   const [address, setAddress] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("result", name, password, email, isAdmin, answer, address);
+    console.log("result", name, password, email, answer, address);
 
     try {
       const res = await axios.post(
@@ -35,10 +44,10 @@ const Register = () => {
           name,
           password,
           email,
-          admin: isAdmin,
+          admin: false,
           answer,
           address,
-        }
+        },
       );
       if (res && res.data.success) {
         setAuth({
@@ -56,112 +65,143 @@ const Register = () => {
       toast.error(error);
     }
   };
+
   return (
-    <>
-      <Layout title={`Register Ecommerce app`}>
-        <div className="login-mainWrapper">
-          <form onSubmit={handleSubmit}>
-            <h3>REGISTER</h3>
-            <div className="input-group">
-              <label htmlFor="inputName">Name</label>
-              <div className="icon-btn">
-                <CgProfile color="black" />
-                <input
-                  type="text"
-                  value={name}
-                  placeholder="John Deo"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputEmail">Email address</label>
-              <div className="icon-btn">
-                <MdOutlineEmail color="black" />
-                <input
-                  type="email"
-                  aria-describedby="emailHelp"
-                  placeholder="example@mail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputPassword">Password</label>
-              <div className="icon-btn">
-                <div onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <CiUnlock /> : <CiLock />}
+    <Layout title={`Register - Helmetto`}>
+      <div className="min-h-[80vh] flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
+            <p className="text-muted-foreground mt-2">Sign up to get started</p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <div className="relative">
+                  <FiUser
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
                 </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  placeholder="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="input-group" className="form-label">
-                Address
-              </label>
-              <div className="icon-btn">
-                <FaRegAddressCard color="black" />
-                <input
-                  type="text"
-                  placeholder="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+              <div className="space-y-2">
+                <Label htmlFor="email">Email address</Label>
+                <div className="relative">
+                  <FiMail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="example@mail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="input-group" className="form-label">
-                What is your favorite sport?
-              </label>
-              <div className="icon-btn">
-                <LuShieldQuestion color="black" />
-                <input
-                  type="text"
-                  placeholder="football"
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                />
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <FiLock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    {showPassword ? (
+                      <FiUnlock size={18} />
+                    ) : (
+                      <FiLock size={18} />
+                    )}
+                  </button>
+                </div>
               </div>
-            </div>
-            {/* <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="adminCheck"
-                value={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              />
-              <label className="form-check-label" htmlFor="adminCheck">
-                Admin?
-              </label>
-            </div> */}
-            <div className="btn-group">
-              <button
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <div className="relative">
+                  <FiMapPin
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="address"
+                    type="text"
+                    placeholder="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="answer">What is your favorite sport?</Label>
+                <div className="relative">
+                  <FiHelpCircle
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="answer"
+                    type="text"
+                    placeholder="football"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+              <Button
                 type="submit"
-                id={`${
-                  !name || !password || !email || !answer || !address
-                    ? "btn-login-disable"
-                    : "btn-login"
-                }`}
+                className="w-full"
                 disabled={!name || !password || !email || !answer || !address}
+                size="lg"
               >
                 Register
-              </button>
-              <span id="register-button">
-                Already have an account?
-                <button onClick={() => navigate("/login")}>Login</button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </Layout>
-    </>
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <p className="text-sm text-muted-foreground text-center">
+              Already have an account?{" "}
+              <Button
+                variant="ghost"
+                onClick={() => navigate("/login")}
+                className="text-primary hover:text-primary/80"
+              >
+                Login
+              </Button>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+    </Layout>
   );
 };
 

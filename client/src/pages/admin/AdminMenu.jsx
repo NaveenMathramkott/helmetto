@@ -1,33 +1,29 @@
 import React from "react";
-import "./style.css";
+import { Button } from "../../components/ui/button";
+import { cn } from "../../lib/utils";
 
 const TAB_DATA = [
-  {
-    to: "/dashboard/admin/orders",
-    name: "Orders",
-  },
-  {
-    to: "/dashboard/admin/create-category",
-    name: "Categories",
-  },
-  {
-    to: "/dashboard/admin/create-product",
-    name: "Products",
-  },
+  { name: "Orders", value: "orders" },
+  { name: "Categories", value: "categories" },
+  { name: "Products", value: "products" },
+  { name: "Users", value: "users" },
 ];
+
 const AdminMenu = ({ onClick, active }) => {
   return (
-    <div className="adminMenu-group">
+    <div className="flex flex-col gap-2 w-full max-w-xs">
       {TAB_DATA.map((tabItem) => (
-        <ul
-          key={tabItem.name}
-          className={`list-group-item ${
-            active === tabItem.name ? "onSelect-adminMenu" : ""
-          }`}
-          onClick={onClick}
+        <Button
+          key={tabItem.value}
+          variant={active === tabItem.value ? "default" : "outline"}
+          className={cn(
+            "w-full justify-start",
+            active === tabItem.value && "bg-primary text-primary-foreground",
+          )}
+          onClick={() => onClick(tabItem.value)}
         >
           {tabItem.name}
-        </ul>
+        </Button>
       ))}
     </div>
   );

@@ -1,11 +1,37 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
 import toast from "react-hot-toast";
 import axios from "axios";
 import UploadButton from "../../components/uploadbutton/UploadButton";
 import ImageViewer from "../../components/imageViewer/ImageViewer";
 import NoData from "../../components/noData/NoData";
 import { textShorter } from "../../utils/utils";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Textarea } from "../../components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "../../components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "../../components/ui/table";
+import { Badge } from "../../components/ui/badge";
 
 const CreateProduct = () => {
   const [createProductTab, setCreateProductTab] = useState(false);
@@ -14,7 +40,7 @@ const CreateProduct = () => {
   const [price, setPrice] = useState("");
   const [offer, setOffer] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
@@ -28,7 +54,7 @@ const CreateProduct = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/product/get-product`
+        `${process.env.REACT_APP_BASE_URL}/api/v1/product/get-product`,
       );
       setAllProducts(data.products);
     } catch (error) {
@@ -63,13 +89,14 @@ const CreateProduct = () => {
       return;
     }
   };
+
   const clearFunction = () => {
     setName("");
     setDescription("");
     setPrice("");
     setOffer("");
     setQuantity("");
-    setCategory();
+    setCategory("");
     setImage("");
   };
 
@@ -98,7 +125,7 @@ const CreateProduct = () => {
           photo: image,
           offer: offer,
           total: 1,
-        }
+        },
       );
       console.log("data", res);
       if (res && res.data.success) {
@@ -116,7 +143,7 @@ const CreateProduct = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/category/get-category`
+        `${process.env.REACT_APP_BASE_URL}/api/v1/category/get-category`,
       );
       if (data?.success) {
         setAllCategories(data?.category);
@@ -128,182 +155,190 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="product-list-mainWrapper">
+    <div className="w-full">
       {!createProductTab ? (
-        <table className="product-box-container">
-          <tr className="product-box-header">
-            <div className="product-box-header-left">
-              <h3>All products</h3>
-              <span>{`Number of products : ${allProducts?.length}`}</span>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle>All Products</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Number of products: {allProducts?.length}
+              </p>
             </div>
-            <div className="product-box-header-right">
-              <button onClick={() => setCreateProductTab(true)}>
-                Add Product
-              </button>
-            </div>
-          </tr>
-          {allProducts.length > 0 ? (
-            <>
-              <tr className="product-list-heading">
-                <th className="id">id</th>
-                <th className="photo">Photo</th>
-                <th className="name">Name</th>
-                <th className="description">Description</th>
-                <th className="price">Price</th>
-                <th className="offer">Offer</th>
-                <th className="category">Category</th>
-                <th className="quantity">Quantity</th>
-                <th className="edit">Edit</th>
-                <th className="delete">Delete</th>
-              </tr>
-              <div>
-                {allProducts?.map((item, index) => (
-                  <tr className="product-list-data" key={item._id}>
-                    <td className="id">{index + 1}</td>
-                    <td className="photo">
-                      <ImageViewer src={item.photo} alt={item.name} />
-                    </td>
-                    <td className="name">{textShorter(item.name)}</td>
-                    <td className="description">
-                      {textShorter(item.description)}
-                    </td>
-                    <td className="price">{item.price}</td>
-                    <td className="offer">{`${item.offer}%`}</td>
-                    <td className="category">{item.category.name}</td>
-                    <td className="quantity">{item.quantity}</td>
-                    <td className="edit">
-                      <button>Edit</button>
-                    </td>
-                    <td className="delete">
-                      <button>Delete</button>
-                    </td>
-                  </tr>
-                ))}
+            <Button onClick={() => setCreateProductTab(true)}>
+              Add Product
+            </Button>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {allProducts.length > 0 ? (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-12">#</TableHead>
+                      <TableHead className="w-20">Photo</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead className="w-24">Price</TableHead>
+                      <TableHead className="w-20">Offer</TableHead>
+                      <TableHead>Category</TableHead>
+                      <TableHead className="w-20">Quantity</TableHead>
+                      <TableHead className="w-32">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {allProducts?.map((item, index) => (
+                      <TableRow key={item._id}>
+                        <TableCell className="text-center">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <ImageViewer src={item.photo} alt={item.name} />
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate">
+                          {textShorter(item.name)}
+                        </TableCell>
+                        <TableCell className="max-w-md truncate">
+                          {textShorter(item.description)}
+                        </TableCell>
+                        <TableCell>₹ {item.price}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={item.offer > 0 ? "success" : "secondary"}
+                          >
+                            {item.offer}%
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{item.category?.name}</TableCell>
+                        <TableCell className="text-center">
+                          {item.quantity}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <Button variant="outline" size="sm">
+                              Edit
+                            </Button>
+                            <Button variant="destructive" size="sm">
+                              Delete
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
-            </>
-          ) : (
-            <>
-              <NoData />
-            </>
-          )}
-        </table>
+            ) : (
+              <div className="py-12 text-center">
+                <NoData />
+              </div>
+            )}
+          </CardContent>
+        </Card>
       ) : (
-        <div className="create-product-container">
-          <form onSubmit={onAddProduct}>
-            <h3>New Product</h3>
-            <div className="input-group">
-              <label htmlFor="inputName">Product Image</label>
-              <div
-                className="icon-btn"
-                style={{
-                  padding: "10px",
-                }}
-              >
-                <UploadButton getImageData={(data) => loadImageFile(data)} />
+        <Card>
+          <CardHeader>
+            <CardTitle>New Product</CardTitle>
+          </CardHeader>
+          <form
+            onSubmit={onAddProduct}
+            id="product-form"
+            className="space-y-6 p-6"
+          >
+            <CardContent className="pt-0 space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="productImage">Product Image</Label>
+                <div className="flex items-center gap-4">
+                  {image && (
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border">
+                      <ImageViewer src={image} alt="Product preview" />
+                    </div>
+                  )}
+                  <UploadButton getImageData={(data) => loadImageFile(data)} />
+                </div>
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputName">Product name</label>
-              <div className="icon-btn">
-                <input
+
+              <div className="space-y-2">
+                <Label htmlFor="productName">Product Name</Label>
+                <Input
+                  id="productName"
                   type="text"
-                  value={name}
                   placeholder="Product name"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
-                  style={{ width: "100%" }}
+                  required
                 />
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputdescription">Description</label>
-              <div className="icon-btn">
-                <textarea
-                  type="text"
-                  aria-describedby="description"
-                  placeholder="description"
+
+              <div className="space-y-2">
+                <Label htmlFor="productDescription">Description</Label>
+                <Textarea
+                  id="productDescription"
+                  placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  style={{ width: "100%" }}
+                  className="min-h-[100px]"
+                  required
                 />
               </div>
-            </div>
 
-            <div className="input-group">
-              <label htmlFor="inputPrice" className="form-label">
-                Price
-              </label>
-              <div className="icon-btn">
-                <input
-                  type="text"
-                  placeholder="Price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  style={{ width: "100%" }}
-                />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="productPrice">Price (₹)</Label>
+                  <Input
+                    id="productPrice"
+                    type="number"
+                    placeholder="Price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="productOffer">Offer (%)</Label>
+                  <Input
+                    id="productOffer"
+                    type="number"
+                    placeholder="Offer"
+                    value={offer}
+                    onChange={(e) => setOffer(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="productQuantity">Quantity</Label>
+                  <Input
+                    id="productQuantity"
+                    type="number"
+                    placeholder="Quantity"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputOffer" className="form-label">
-                Offer
-              </label>
-              <div className="icon-btn">
-                <input
-                  type="text"
-                  placeholder="Offer"
-                  value={offer}
-                  onChange={(e) => setOffer(e.target.value)}
-                  style={{ width: "100%" }}
-                />
+
+              <div className="space-y-2">
+                <Label htmlFor="productCategory">Category</Label>
+                <Select value={category} onValueChange={setCategory} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {allCategories?.map((itm, index) => (
+                      <SelectItem key={`${index}-${itm.slug}`} value={itm._id}>
+                        {itm.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputCategory" className="form-label">
-                Category
-              </label>
-              <div className="icon-btn">
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  style={{ width: "100%" }}
-                >
-                  {allCategories?.map((itm, index) => (
-                    <option key={`oprion-${index}-${itm.slug}`} value={itm._id}>
-                      {itm.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="inputQuantity" className="form-label">
-                Quantity
-              </label>
-              <div className="icon-btn">
-                <input
-                  type="number"
-                  placeholder="Quantity"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                  style={{ width: "100%" }}
-                />
-              </div>
-            </div>
-            <div className="btn-group-product">
-              <button type="submit" id={"btn-login"}>
-                Add Product
-              </button>
-            </div>
-            {/* <div className="btn-group-product">
-              <button
-                id={"btn-clear"}
-                onClick={clearFunction}
-                disabled={name || description || price || offer || quantity}
-              >
-                Clear
-              </button>
-            </div> */}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button type="submit">Add Product</Button>
+            </CardFooter>
           </form>
-        </div>
+        </Card>
       )}
     </div>
   );

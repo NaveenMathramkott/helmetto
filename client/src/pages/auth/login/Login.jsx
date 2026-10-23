@@ -4,10 +4,17 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../context/authProvider";
-import "./style.css";
-import { MdOutlineEmail } from "react-icons/md";
-import { CiLock } from "react-icons/ci";
-import { CiUnlock } from "react-icons/ci";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "../../../components/ui/card";
+import { FiMail, FiLock, FiUnlock, FiUserPlus } from "react-icons/fi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,6 +23,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -24,7 +32,7 @@ const Login = () => {
         {
           password,
           email,
-        }
+        },
       );
       if (res && res.data.success) {
         toast.success(res.data.message);
@@ -42,63 +50,98 @@ const Login = () => {
       toast.error(`Login user not found`);
     }
   };
-  return (
-    <>
-      <Layout title={`Login Ecommerce app`}>
-        <div className="login-mainWrapper">
-          <form onSubmit={handleSubmit}>
-            <h3>LOGIN</h3>
-            <div className="input-group">
-              <label htmlFor="inputEmail">Email address</label>
-              <div className="icon-btn">
-                <MdOutlineEmail color="black" />
-                <input
-                  type="email"
-                  id="inputEmail"
-                  aria-describedby="emailHelp"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="example@mail.com"
-                />
-              </div>
-            </div>
-            <div className="input-group">
-              <label>Password</label>
-              <div className="icon-btn">
-                <div onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <CiUnlock /> : <CiLock />}
-                </div>
 
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="password"
-                />
+  return (
+    <Layout title={`Login - Helmetto`}>
+      <div className="min-h-[80vh] flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
+            <p className="text-muted-foreground mt-2">
+              Sign in to your account
+            </p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email address</Label>
+                <div className="relative">
+                  <FiMail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="example@mail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="btn-group">
-              <button
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <FiLock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    size={18}
+                  />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    {showPassword ? (
+                      <FiUnlock size={18} />
+                    ) : (
+                      <FiLock size={18} />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <Button
                 type="submit"
-                id={`${
-                  !email || !password ? "btn-login-disable" : "btn-login"
-                }`}
+                className="w-full"
                 disabled={!email || !password}
+                size="lg"
               >
                 Login
-              </button>
-              <button type="button" onClick={() => navigate("/forgotPassword")}>
-                forgot password
-              </button>
-              <span id="register-button">
-                Don't have an account?
-                <button onClick={() => navigate("/register")}>Register</button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </Layout>
-    </>
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/forgotPassword")}
+              className="w-full"
+            >
+              Forgot password?
+            </Button>
+            <p className="text-sm text-muted-foreground text-center">
+              Don't have an account?{" "}
+              <Button
+                variant="ghost"
+                onClick={() => navigate("/register")}
+                className="text-primary hover:text-primary/80"
+              >
+                Register
+              </Button>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+    </Layout>
   );
 };
 
