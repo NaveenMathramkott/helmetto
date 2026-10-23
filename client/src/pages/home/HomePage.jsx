@@ -113,23 +113,27 @@ const HomePage = () => {
   return (
     <Layout title={`Helmetto - Premium Helmets & Accessories`}>
       <div className="min-h-screen">
-        {/* Price Filter Section */}
-        <section className="py-6 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-800">
+        {/* Price Filter Section - Compact */}
+        <section className="py-3 bg-gray-50 dark:bg-gray-900/30 border-b border-gray-100 dark:border-gray-800">
           <div className="container mx-auto px-4">
-            <RadioGroup
-              onValueChange={setRadio}
-              value={radio}
-              className="flex flex-wrap justify-center gap-2"
-            >
-              {PRICE_DATA?.map((item) => (
-                <div key={item.id} className="flex items-center gap-2">
-                  <RadioGroupItem value={item.range} className="sr-only" />
-                  <Label className="rounded-full border border-gray-200 dark:border-gray-700 px-4 py-1.5 text-sm font-medium cursor-pointer transition-all duration-200 hover:bg-primary/5 hover:border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=checked]:border-primary">
+            <div className="flex flex-wrap items-center justify-center gap-1.5">
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mr-1">Price:</span>
+              <RadioGroup
+                onValueChange={setRadio}
+                value={radio}
+                className="flex flex-wrap justify-center gap-1"
+              >
+                {PRICE_DATA?.map((item) => (
+                  <Label
+                    key={item.id}
+                    className="rounded-full border border-gray-200 dark:border-gray-700 px-3 py-1 text-xs font-medium cursor-pointer transition-all duration-200 hover:bg-primary/5 hover:border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=checked]:border-primary"
+                  >
+                    <RadioGroupItem value={item.range} className="sr-only" />
                     {item.name}
                   </Label>
-                </div>
-              ))}
-            </RadioGroup>
+                ))}
+              </RadioGroup>
+            </div>
           </div>
         </section>
 
