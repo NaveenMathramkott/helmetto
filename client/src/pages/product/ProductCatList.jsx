@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import ProductCard from "../../components/productCard/ProductCard";
-import { Radio } from "antd";
 import { PRICE_DATA } from "../../constant/constant";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NoData from "../../components/noData/NoData";
+import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
+import { Label } from "../../components/ui/label";
 
 const ProductCatList = () => {
   const location = useLocation();
@@ -34,7 +35,7 @@ const ProductCatList = () => {
         {
           radio,
           checked,
-        }
+        },
       );
       setProducts(data?.products);
     } catch (error) {
@@ -47,36 +48,33 @@ const ProductCatList = () => {
   };
 
   return (
-    <Layout title={`${location?.state?.name}-CategoryList-Emart`}>
-      <div className="productCat-mainWrapper">
-        <div className="productCat-header">
-          <Radio.Group
-            size="middle"
-            onChange={(e) => setRadio(e.target.value)}
-            buttonStyle="solid"
-            style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+    <Layout title={`${location?.state?.name}-CategoryList-Helmetto`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-6">
+          <RadioGroup
+            onValueChange={setRadio}
+            value={radio}
+            className="flex flex-wrap gap-2"
           >
             {PRICE_DATA?.map((item) => (
-              <Radio
-                key={item.id}
-                value={item.range}
-                style={{
-                  borderRadius: "8px",
-                  border: "1px solid #008ecc",
-                  padding: "2px 4px",
-                }}
-              >
-                {item.name}
-              </Radio>
+              <div key={item.id} className="flex items-center gap-2">
+                <RadioGroupItem value={item.range} className="sr-only" />
+                <Label className="rounded-md border border-primary px-3 py-1 text-sm cursor-pointer transition-colors hover:bg-primary/10">
+                  {item.name}
+                </Label>
+              </div>
             ))}
-          </Radio.Group>
+          </RadioGroup>
         </div>
+
         <div className="productCat-body">
-          <div className="productCat-body-header">
-            <h3>{`${location?.state?.name} Category List`}</h3>
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-foreground">
+              {`${location?.state?.name} Category List`}
+            </h2>
           </div>
           {products.length !== 0 ? (
-            <div className="productCat-data-list">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products?.map((item) => (
                 <div key={item?._id}>
                   <ProductCard
@@ -87,7 +85,9 @@ const ProductCatList = () => {
               ))}
             </div>
           ) : (
-            <NoData title={"No Product found in this category"} />
+            <div className="py-12 text-center">
+              <NoData title={"No Product found in this category"} />
+            </div>
           )}
         </div>
       </div>
