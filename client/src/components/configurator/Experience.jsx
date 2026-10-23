@@ -122,7 +122,7 @@ const Experience = () => {
         </Canvas>
 
         {/* Header Overlay */}
-        <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
+        <div className="fixed top-0 left-0 right-0 z-60">
           <Header />
         </div>
 
@@ -132,7 +132,7 @@ const Experience = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="fixed left-4 top-1/2 -translate-y-1/2 z-50 bg-gray-900/80 backdrop-blur-sm border-gray-700 text-white hover:bg-gray-800 rounded-full p-3 shadow-xl"
+              className="fixed left-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border-gray-700 text-white hover:bg-gray-800 rounded-full p-3 shadow-xl"
             >
               <FiDroplet className="h-5 w-5" />
             </Button>
@@ -142,7 +142,14 @@ const Experience = () => {
               <DialogTitle className="text-lg font-semibold text-white flex items-center justify-between">
                 <FiDroplet className="h-4 w-4 text-teal-400 mr-2" />
                 Helmet Colors
-                <FiX className="h-4 w-4" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => setOpenColorPalette(false)}
+                >
+                  <FiX className="h-4 w-4" />
+                </Button>
               </DialogTitle>
               <DialogDescription className="text-gray-500 text-sm mt-1">
                 Select a color for the outer helmet shell
@@ -202,12 +209,12 @@ const Experience = () => {
         </Dialog>
 
         {/* Cart Button */}
-        <div className="fixed top-24 right-4 z-40 pointer-events-auto">
+        <div className="fixed top-24 right-4 z-60">
           <CartButton />
         </div>
 
         {/* Bottom Footer */}
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 text-center pointer-events-none">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 text-center pointer-events-none">
           <p className="text-xs text-gray-400 bg-gray-900/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700">
             Click on helmet parts to configure
           </p>
