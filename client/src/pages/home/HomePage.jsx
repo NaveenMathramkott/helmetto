@@ -117,7 +117,9 @@ const HomePage = () => {
         <section className="py-3 bg-gray-50 dark:bg-gray-900/30 border-b border-gray-100 dark:border-gray-800">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-center gap-1.5">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mr-1">Price:</span>
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mr-1">
+                Price:
+              </span>
               <RadioGroup
                 onValueChange={setRadio}
                 value={radio}
